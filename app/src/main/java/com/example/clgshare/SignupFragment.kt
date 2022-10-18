@@ -13,10 +13,8 @@ class SignupFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_signup,container,false)
 
-        val view=inflater.inflate(R.layout.fragment_signup,container,false)
-
-        return view
     }
 
 }
