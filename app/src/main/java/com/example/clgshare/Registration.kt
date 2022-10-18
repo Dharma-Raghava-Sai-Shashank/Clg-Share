@@ -32,7 +32,9 @@ class Registration : AppCompatActivity() {
         // If Current User :
 
 
-        // setting Fragments by Adapters:
+
+
+
 
         // setting Fragments by Adapters:
         val registrationAdapter =
@@ -52,27 +54,21 @@ class Registration : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        //Animating ViewPager:
 
         //Animating ViewPager:
         viewPager.setTranslationY(1000f)
         viewPager.alpha = f
         viewPager.animate().translationYBy(-1000f).alpha(1f).setDuration(750).start()
 
-        // Animating TabLayout:
 
         // Animating TabLayout:
         tablayout.setAlpha(f)
         tablayout.animate().alpha(1f).setDuration(1000).start()
 
         // Images:
-
-        // Images:
         val twitter = findViewById<ImageView>(R.id.twitter)
         val google = findViewById<ImageView>(R.id.google)
         val facebook = findViewById<ImageView>(R.id.facebook)
-
-        // Animating Images:
 
         // Animating Images:
         twitter.setTranslationX(-500f)
