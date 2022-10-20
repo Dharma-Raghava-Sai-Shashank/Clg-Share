@@ -46,7 +46,7 @@
         android:layout_width="124dp"
         android:layout_height="47dp"
         android:layout_marginTop="116dp"
-        android:background="@color/lightgrey"
+        android:background="@drawable/box"
         android:onClick="Login"
 
         android:text="login"

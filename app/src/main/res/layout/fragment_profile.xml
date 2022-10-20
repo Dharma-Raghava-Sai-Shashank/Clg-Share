@@ -134,7 +134,6 @@
         android:layout_width="wrap_content"
         android:layout_height="43dp"
         android:layout_marginBottom="64dp"
-        android:background="@color/lightgrey"
         android:onClick="logout"
         android:text="logout"
         app:layout_constraintBottom_toBottomOf="parent"
