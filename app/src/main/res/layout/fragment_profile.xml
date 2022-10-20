@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="textEnd">
+    android:textAlignment="textEnd"
+    android:background="#B2B2B2">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ProfilePersonImage"
@@ -135,11 +136,12 @@
         android:layout_marginBottom="64dp"
         android:onClick="logout"
         android:text="logout"
-        app:backgroundTint="#FFFFFF"
+        android:background="@color/cyan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PprogressBar" />
 
     <EditText
         android:id="@+id/EditProfileName"
@@ -149,6 +151,7 @@
         android:fontFamily="@font/aclonica"
         android:textAlignment="textStart"
         android:textColor="#000000"
+        android:background="@color/lightergrey"
         android:textSize="16sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,6 +166,7 @@
         android:fontFamily="@font/aclonica"
         android:textAlignment="textStart"
         android:textColor="#000000"
+        android:background="@color/lightergrey"
         android:textSize="16sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -179,6 +183,7 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:visibility="invisible"
+        android:background="@color/lightergrey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileEmail" />
@@ -191,6 +196,7 @@
         android:fontFamily="@font/aclonica"
         android:textColor="#000000"
         android:textSize="16sp"
+        android:background="@color/lightergrey"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -221,4 +227,4 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditProfileAbout" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

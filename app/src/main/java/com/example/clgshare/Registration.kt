@@ -2,18 +2,22 @@ package com.example.clgshare
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.android.volley.*
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.InternalCoroutinesApi
+import java.util.*
 
 
 class Registration : AppCompatActivity() {
@@ -30,11 +34,11 @@ class Registration : AppCompatActivity() {
         val viewPager=findViewById<ViewPager>(R.id.ViewPager)
 
         // If Current User :
-
-
-
-
-
+        val firebaseAuth = FirebaseAuth.getInstance()
+        if (firebaseAuth.currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         // setting Fragments by Adapters:
         val registrationAdapter =
@@ -86,8 +90,8 @@ class Registration : AppCompatActivity() {
         val login_email = findViewById(R.id.login__email) as EditText
         val login_password = findViewById(R.id.login_password) as EditText
         val Log = findViewById(R.id.LprogressBar) as ProgressBar
-        val email: String = login_email.getText().toString().trim { it <= ' ' }
-        val password: String = login_password.getText().toString().trim { it <= ' ' }
+        val email: String = login_email.getText().toString()
+        val password: String = login_password.getText().toString()
 
         // Checking conditions:
         if (TextUtils.isEmpty(email)) {
@@ -104,37 +108,52 @@ class Registration : AppCompatActivity() {
         }
         Log.setVisibility(View.VISIBLE)
 
-        // Volley ==> Signin :
-        val stringRequest: StringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener<String> { response ->
-                if (response == "success") {
-                    val intent = Intent(this@Registration, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else if (response == "failure") {
-                    Toast.makeText(this@Registration, "Invalid Credentials", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(
-                    this@Registration,
-                    error.toString().trim { it <= ' ' },
-                    Toast.LENGTH_SHORT
-                ).show()
-            }) {
-            @get:Throws(AuthFailureError::class)
-            protected val params: Any
-                protected get() {
-                    val data: HashMap<Any, Any> = HashMap<Any, Any>()
-                    data.put("email", email)
-                    data.put("password", password)
-                    return data
-                }
-        }
-        val requestQueue: RequestQueue = Volley.newRequestQueue(applicationContext)
-        requestQueue.add(stringRequest)
+//        // Firease Sigin:
+//        var firebaseAuth =FirebaseAuth.getInstance()
+//        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+//            OnCompleteListener<AuthResult?> { task ->
+//                if (task.isSuccessful) {
+//                    Log.visibility = View.INVISIBLE
+//                    Toast.makeText(this@Registration, "Login Successful", Toast.LENGTH_SHORT).show()
+//                    startActivity(
+//                        Intent(this@Registration.applicationContext, MainActivity::class.java))
+//                } else {
+//                    Log.visibility = View.INVISIBLE
+//                    Toast.makeText(this@Registration, "Error!", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+
+//        // Volley ==> Signin :
+//        val stringRequest: StringRequest = object : StringRequest(
+//            Request.Method.POST, "http://localhost:3000/users/login",
+//            Response.Listener<String> { response ->
+//                if (response == "success") {
+//                    val intent = Intent(this@Registration, MainActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                } else if (response == "failure") {
+//                    Toast.makeText(this@Registration, "Invalid Credentials", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            },
+//            Response.ErrorListener { error ->
+//                Toast.makeText(
+//                    this@Registration,
+//                    error.toString(),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }) {
+//            @get:Throws(AuthFailureError::class)
+//            protected val params: Any
+//                protected get() {
+//                    val data: HashMap<Any, Any> = HashMap<Any, Any>()
+//                    data.put("email", email)
+//                    data.put("password", password)
+//                    return data
+//                }
+//        }
+//        val requestQueue: RequestQueue = Volley.newRequestQueue(applicationContext)
+//        requestQueue.add(stringRequest)
     }
 
     // Signup Activity:
@@ -147,9 +166,9 @@ class Registration : AppCompatActivity() {
         val signup_create_password = findViewById(R.id.signup_create_password) as EditText
         val Sign = findViewById(R.id.SprogressBar) as ProgressBar
         val Username: String = signup_username.getText().toString()
-        val Email: String = signup_email.getText().toString().trim { it <= ' ' }
-        val Password: String = signup_password.getText().toString().trim { it <= ' ' }
-        val create_password: String = signup_create_password.getText().toString().trim { it <= ' ' }
+        val Email: String = signup_email.getText().toString()
+        val Password: String = signup_password.getText().toString()
+        val create_password: String = signup_create_password.getText().toString()
 
         // Checking conditions:
         if (TextUtils.isEmpty(Username)) {
@@ -174,38 +193,63 @@ class Registration : AppCompatActivity() {
         }
         Sign.setVisibility(View.VISIBLE)
 
+        // Firebase Signup :
+        var firebaseAuth =FirebaseAuth.getInstance()
+        firebaseAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(
+            OnCompleteListener<AuthResult?> { task ->
+                if (task.isSuccessful) {
+
+                    // Firebase Database:
+                    val firebaseDatabase = FirebaseDatabase.getInstance()
+                    val users = firebaseDatabase.getReference("USERS")
+                    users.child(firebaseAuth.uid.toString()).setValue(Username)
+
+                    Sign.visibility = View.INVISIBLE
+                    Toast.makeText(this@Registration, "Signup Successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@Registration, MainActivity::class.java))
+                } else {
+                    Sign.visibility = View.INVISIBLE
+                    Toast.makeText(this@Registration, "Error!", Toast.LENGTH_SHORT).show()
+                }
+            })
+
         // Volley ==> Signup :
-        val stringRequest: StringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener<String> { response ->
-                if (response == "success") {
-                    Toast.makeText(this@Registration,"Login Successfull",Toast.LENGTH_SHORT)
-                    val intent = Intent(this@Registration, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else if (response == "failure") {
-                    Toast.makeText(this@Registration, "Invalid Credentials", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            },
-            Response.ErrorListener { error ->
-                Toast.makeText(
-                    this@Registration,
-                    error.toString().trim { it <= ' ' },
-                    Toast.LENGTH_SHORT
-                ).show()
-            }) {
-            @get:Throws(AuthFailureError::class)
-            protected val params: Any
-                protected get() {
-                    val data: HashMap<Any, Any> = HashMap<Any, Any>()
-                    data.put("name",signup_username)
-                    data.put("email", signup_email)
-                    data.put("password", signup_password)
-                    return data
-                }
-        }
-        val requestQueue: RequestQueue = Volley.newRequestQueue(applicationContext)
-        requestQueue.add(stringRequest)
+//        val stringRequest: StringRequest = object : StringRequest(
+//            Method.POST, "http://localhost:3000/users",
+//            Response.Listener<String> { response ->
+//                if (response == "success") {
+//                    Toast.makeText(this@Registration,"Login Successfull",Toast.LENGTH_SHORT)
+//                    startActivity(
+//                        Intent(
+//                            this@Registration.getApplicationContext(),
+//                            Registration::class.java
+//                        )
+//                    )
+//                    startActivity(intent)
+//                    finish()
+//                } else if (response == "failure") {
+//                    Toast.makeText(this@Registration, "Invalid Credentials", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            },
+//            Response.ErrorListener { error ->
+//                Toast.makeText(
+//                    this@Registration,
+//                    error.toString(),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }) {
+//            @get:Throws(AuthFailureError::class)
+//            protected val params: Any
+//                protected get() {
+//                    val data: HashMap<Any, Any> = HashMap<Any, Any>()
+//                    data.put("name",signup_username)
+//                    data.put("email", signup_email)
+//                    data.put("password", signup_password)
+//                    return data
+//                }
+//        }
+//        val requestQueue: RequestQueue = Volley.newRequestQueue(applicationContext)
+//        requestQueue.add(stringRequest)
     }
 }
