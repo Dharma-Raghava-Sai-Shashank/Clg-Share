@@ -59,17 +59,19 @@ interface AppDataDao {
     fun deleteAllProfileData()
 
     @Query("SELECT COUNT() FROM MyPostData")
-    fun getPostDataCount(): Int?
+    fun getPostDataCount(): Int
 
     @Query("SELECT COUNT() FROM MyQueryData")
-    fun getQueryDataCount(): Int?
+    fun getQueryDataCount(): Int
 
     @Query("SELECT COUNT() FROM MyProfileData")
-    fun getProfileDataCount(): Int?
+    fun getProfileDataCount(): Int
 
     @Query("SELECT EXISTS(SELECT * FROM MyFavouriteData WHERE uid= :fid)")
     fun is_hexist(fid: String?): Boolean?
 
     @Query("SELECT EXISTS(SELECT * FROM MyConnectionData WHERE uid= :cid)")
     fun is_pexist(cid: String?): Boolean?
+
+
 }

@@ -22,4 +22,5 @@ class MyPostData {
         this.subject = subject
         this.description = description
     }
+
 }

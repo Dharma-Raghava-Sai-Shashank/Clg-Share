@@ -4,21 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B2B2B2">
+    >
 
 
-
-    <ImageView
-        android:id="@+id/imageView"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/PersonImage"
         android:layout_width="87dp"
         android:layout_height="87dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="120dp"
+        android:onClick="profilepic"
+        android:src="@drawable/logo"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -42,7 +45,6 @@
         android:layout_height="660dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rectangle"
-        android:backgroundTint="@color/lightergrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -119,10 +121,8 @@
             android:id="@+id/TabLayout"
             android:layout_width="358dp"
             android:layout_height="45dp"
-            android:background="#F2FFFFFF"
             android:textAlignment="center"
             android:textDirection="firstStrong"
-            android:backgroundTint="@color/cyan"
             app:layout_constraintBottom_toBottomOf="@+id/ViewPager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.476"

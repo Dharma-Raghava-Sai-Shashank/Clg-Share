@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B2B2B2">
+    android:background="#FFFFFF">
 
     <EditText
         android:id="@+id/signup_username"
@@ -82,7 +82,7 @@
         android:id="@+id/signup"
         android:layout_width="124dp"
         android:layout_height="47dp"
-       android:background="@color/cyan"
+        android:background="@color/lightgrey"
         android:onClick="Signup"
         android:text="Signup"
 

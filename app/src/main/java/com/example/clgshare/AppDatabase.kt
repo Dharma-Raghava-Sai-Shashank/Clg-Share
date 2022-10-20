@@ -11,28 +11,4 @@ import kotlinx.coroutines.internal.synchronized
     version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun appDataDao(): AppDataDao
-
-    companion object {
-
-        private var INSTANCE: AppDatabase? = null
-
-        @InternalCoroutinesApi
-        fun getDatabase(context: Context): AppDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this)
-            {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java as Class<AppDatabase>,
-                    "APP DATA"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-
-        }
-    }
 }

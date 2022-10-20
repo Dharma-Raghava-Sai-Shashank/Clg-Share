@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -46,76 +47,79 @@ class MainActivity : AppCompatActivity() {
         // Profile :
         PersonName = findViewById(R.id.PersonName)
 
-//        val Database: AppDatabase = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java, "USER DATA"
-//        ).allowMainThreadQueries().build()
-//        val houseDataDao: HouseDataDao = Database.houseDataDao()
-//        val profileDataList: List<MyProfileData> = houseDataDao.getAllProfileData()
-//        if (profileDataList.size != 0) {
-//            Name = profileDataList[profileDataList.size - 1].Name
-//            PersonName.setText(Name)
-//        }
+        val Database: AppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java as Class<AppDatabase>, "APP DATA").allowMainThreadQueries().build()
+        val appDatadao: AppDataDao = Database.appDataDao()
+        val profileDataList: List<MyProfileData> = appDatadao.getAllProfileData()
+        if (profileDataList.size != 0) {
+            Name = profileDataList[profileDataList.size - 1].name
+            PersonName!!.text=(Name)
+        }
 
 
         // Navigation View:
-//        val bottomNavigationView:BottomNavigationView = findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-//            when (item.getItemId()) {
-//                R.id.Home -> {
-//                    PersonName?.setText(Name)
-//                    replacefragment(HomeFragment())
-//                    a = 1
-//                }
-//                R.id.Chat -> {
-//                    PersonName?.setText("                       QUERY")
-//                    replacefragment(QueryFragment())
-//                    a = 2
-//                }
-//                R.id.Add -> {
-//                    PersonName?.setText("                      ADD POST")
-//                    replacefragment(PostFragment())
-//                    a = 3
-//                }
-//                R.id.Favorite -> {
-//                    PersonName?.setText("                    FAVOURITES")
-//                    replacefragment(LikeFragment())
-//                    a = 4
-//                }
-//                R.id.Profile -> {
-//                    PersonName?.setText("                       PROFILE")
-//                    replacefragment(ProfileFragment())
-//                    a = 5
-//                }
-//            }
-//            true
-//        }
+        val bottomNavigationView:BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.getItemId()) {
+                R.id.Home -> {
+                    PersonName?.setText(Name)
+                    replacefragment(HomeFragment())
+                    a = 1
+                }
+                R.id.Chat -> {
+                    PersonName?.setText("                       QUERY")
+                    replacefragment(QueryFragment())
+                    a = 2
+                }
+                R.id.Add -> {
+                    PersonName?.setText("                      ADD POST")
+                    replacefragment(PostFragment())
+                    a = 3
+                }
+                R.id.Favorite -> {
+                    PersonName?.setText("                    FAVOURITES")
+                    replacefragment(LikeFragment())
+                    a = 4
+                }
+                R.id.Profile -> {
+                    PersonName?.setText("                       PROFILE")
+                    replacefragment(ProfileFragment())
+                    a = 5
+                }
+            }
+            true
+        }
 
     }
 
     // Menu :
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.main_menu, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == R.id.myhouse) {
-//            a = 6
-//            PersonName?.setText("                     MY POST")
-//            replacefragment(MyPostFragment())
-//        } else if (item.itemId == R.id.Chats) {
-//            a = 7
-//            val intent = Intent(this@MainActivity, Chats::class.java)
-//            startActivity(intent)
-//        } else {
-//            a = 9
-//
-//            FirebaseAuth.getInstance().signOut()
-//            startActivity(Intent(this@MainActivity.applicationContext, Registration::class.java))
-//        }
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.myhouse) {
+            a = 6
+            PersonName?.setText("                     MY POST")
+            replacefragment(MyPostFragment())
+        } else if (item.itemId == R.id.Chats) {
+            a = 7
+            val intent = Intent(this@MainActivity, Chats::class.java)
+            startActivity(intent)
+        } else if(item.itemId==R.id.logout){
+            a = 9
+
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this@MainActivity.applicationContext, Registration::class.java))
+        }
+        else if(item.itemId==R.id.settings)
+        {
+            a=10
+            PersonName?.setText("                   SETTINGS")
+            replacefragment(SettingsFragment())
+        }
+        return true
+    }
 
     // Changing of Fragments by Selection :
     fun replacefragment(fragment: Fragment) {
@@ -126,30 +130,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Profilepic Touch :
-//    fun profilepic(view: View?) {
-//        PersonName?.setText("                       PROFILE")
-//        replacefragment(ProfileFragment())
-//        a = 5
-//    }
-//
-//    //Connect Touch :
-//    fun connect(view: View?) {
-//        PersonName?.setText("                   QUERRY")
-//        replacefragment(QueryFragment())
-//        a = 2
-//    }
+    fun profilepic(view: View?) {
+        PersonName?.setText("                       PROFILE")
+        replacefragment(ProfileFragment())
+        a = 5
+    }
+
+    //Connect Touch :
+    fun connect(view: View?) {
+        PersonName?.setText("                   QUERRY")
+        replacefragment(QueryFragment())
+        a = 2
+    }
 //
 //    //     On Back Press --> End the App :
-//    override fun onBackPressed() {
-//        if (a != 1) {
-//            a = 1
-//            PersonName?.setText(Name)
-//            replacefragment(HomeFragment())
-//        } else {
-//            super.onBackPressed()
-//            ActivityCompat.finishAffinity(this@MainActivity)
-//        }
-//    }
+    override fun onBackPressed() {
+        if (a != 1) {
+            a = 1
+            PersonName?.setText(Name)
+            replacefragment(HomeFragment())
+        } else {
+            super.onBackPressed()
+            ActivityCompat.finishAffinity(this@MainActivity)
+        }
+    }
 }
 
 

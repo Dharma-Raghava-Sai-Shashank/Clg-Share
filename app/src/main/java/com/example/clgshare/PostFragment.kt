@@ -77,16 +77,17 @@ class PostFragment : Fragment()  {
                 return@OnClickListener
             }
 
-            progressBar?.setVisibility(View.VISIBLE)
 
             // Alert Box :
             var builder : AlertDialog.Builder = AlertDialog.Builder(getContext())
             builder.setMessage("Share as ?").setCancelable(true)
                 .setPositiveButton("Post",
                     DialogInterface.OnClickListener { dialog, which ->
+                        progressBar?.setVisibility(View.VISIBLE)
+
 
                         val posts: DatabaseReference = firebaseDatabase.getReference("POST")
-                        val s:String=firebaseAuth.uid.toString()+appDataDao.getPostDataCount().toString().subSequence(34,41).toString()
+                        val s:String=firebaseAuth.uid.toString()+appDataDao.getPostDataCount().toString()
 
                         // Image uploading to Firease Storage :
                         val PostImages = storage.reference.child("Post Image").child(s)
@@ -111,9 +112,10 @@ class PostFragment : Fragment()  {
                         dialog.cancel()
                     }).setNegativeButton("Query",
                     DialogInterface.OnClickListener { dialog, which ->
+                        progressBar?.setVisibility(View.VISIBLE)
 
                         val querys: DatabaseReference = firebaseDatabase.getReference("QUERY")
-                        val s:String=firebaseAuth.uid.toString()+appDataDao.getQueryDataCount().toString().subSequence(34,41).toString()
+                        val s:String=firebaseAuth.uid.toString()+appDataDao.getQueryDataCount().toString()
 
                         // Image uploading to Firease Storage :
                         val PostImages = storage.reference.child("Query Image").child(s)

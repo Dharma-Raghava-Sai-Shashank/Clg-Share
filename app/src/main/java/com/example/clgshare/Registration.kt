@@ -109,19 +109,19 @@ class Registration : AppCompatActivity() {
         Log.setVisibility(View.VISIBLE)
 
 //        // Firease Sigin:
-//        var firebaseAuth =FirebaseAuth.getInstance()
-//        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
-//            OnCompleteListener<AuthResult?> { task ->
-//                if (task.isSuccessful) {
-//                    Log.visibility = View.INVISIBLE
-//                    Toast.makeText(this@Registration, "Login Successful", Toast.LENGTH_SHORT).show()
-//                    startActivity(
-//                        Intent(this@Registration.applicationContext, MainActivity::class.java))
-//                } else {
-//                    Log.visibility = View.INVISIBLE
-//                    Toast.makeText(this@Registration, "Error!", Toast.LENGTH_SHORT).show()
-//                }
-//            })
+        var firebaseAuth =FirebaseAuth.getInstance()
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+            OnCompleteListener<AuthResult?> { task ->
+                if (task.isSuccessful) {
+                    Log.visibility = View.INVISIBLE
+                    Toast.makeText(this@Registration, "Login Successful", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(this@Registration.applicationContext, MainActivity::class.java))
+                } else {
+                    Log.visibility = View.INVISIBLE
+                    Toast.makeText(this@Registration, "Error!", Toast.LENGTH_SHORT).show()
+                }
+            })
 
 //        // Volley ==> Signin :
 //        val stringRequest: StringRequest = object : StringRequest(

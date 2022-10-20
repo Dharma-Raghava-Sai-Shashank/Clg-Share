@@ -10,6 +10,8 @@
         android:id="@+id/myhouse" />
     <item android:title="Chats"
         android:id="@+id/Chats"/>
+    <item android:title="Settings"
+        android:id="@+id/settings"/>
     <item android:title="Logout"
         android:id="@+id/logout"/>
 </menu>
