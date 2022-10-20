@@ -36,7 +36,7 @@ class MyConnectionRecyclerViewAdapter(data: ArrayList<MyConnectionData>) : Recyc
         // Firebase :
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseDatabase = FirebaseDatabase.getInstance()
-        val users = firebaseDatabase.getReference("Users")
+        val users = firebaseDatabase.getReference("USERS")
 
         // Firebase Storage :
         val storage = FirebaseStorage.getInstance()

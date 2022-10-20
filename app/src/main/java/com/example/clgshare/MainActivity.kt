@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -22,7 +23,7 @@ import kotlin.reflect.KClass
 class MainActivity : AppCompatActivity() {
 
     var a = 1
-    val ProfilePic: ImageView? = null
+    var ProfilePic: ImageView? = null
     var FullImage:ImageView? = null
     var Name: String? = null
     var PersonName :TextView?=null
@@ -46,13 +47,14 @@ class MainActivity : AppCompatActivity() {
 
         // Profile :
         PersonName = findViewById(R.id.PersonName)
-
+        ProfilePic=findViewById(R.id.PersonImage)
         val Database: AppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java as Class<AppDatabase>, "APP DATA").allowMainThreadQueries().build()
         val appDatadao: AppDataDao = Database.appDataDao()
         val profileDataList: List<MyProfileData> = appDatadao.getAllProfileData()
         if (profileDataList.size != 0) {
             Name = profileDataList[profileDataList.size - 1].name
             PersonName!!.text=(Name)
+            Glide.with(this).load(profileDataList.get(0).image).centerCrop().placeholder(R.drawable.profile).into(ProfilePic!!)
         }
 
 

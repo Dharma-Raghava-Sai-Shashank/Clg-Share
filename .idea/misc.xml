@@ -20,9 +20,9 @@
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.18631006346328197" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.18631006346328197" />
         <entry key="app/src/main/res/layout/fullimage_dialog.xml" value="0.18631006346328197" />
-        <entry key="app/src/main/res/layout/home_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/home_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/like_layout.xml" value="0.18631006346328197" />
-        <entry key="app/src/main/res/layout/query_layout.xml" value="0.23001282599401454" />
+        <entry key="app/src/main/res/layout/query_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/settings_fragment.xml" value="0.18631006346328197" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.23001282599401454" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.23001282599401454" />

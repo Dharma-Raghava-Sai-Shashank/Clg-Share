@@ -39,13 +39,13 @@ class HomeRecyclerViewAdapter( MyPostDataList: ArrayList<Data>):RecyclerView.Ada
 
         // Firebase Storage :
         val storage = FirebaseStorage.getInstance()
-        val PostImages = storage.reference.child("Post Image").child(myPostData?.image.toString())
+        val PostImages = storage.reference.child("Profile Image").child(myPostData?.uid?.subSequence(0,28).toString())
         PostImages.downloadUrl.addOnSuccessListener {
             Glide.with(holder.itemView).load(it).centerCrop().placeholder(R.drawable.profile)
                 .into(holder.ProfilePic)
         }
-//
-        val users = firebaseDatabase.getReference("Users")
+
+        val users = firebaseDatabase.getReference("USERS")
         val uid: String = myPostData.uid?.subSequence(0, 28).toString()
         users.child(uid).get().addOnSuccessListener {
             holder.ProfileName.text = it.getValue().toString()

@@ -6,7 +6,7 @@
         android:enabled="true"/>
     <item android:id="@+id/Chat"
         android:title=""
-        android:icon="@drawable/blacksend"
+        android:icon="@android:drawable/stat_notify_chat"
         android:iconTint="@color/black"
         android:enabled="true"/>
     <item android:id="@+id/Add"
