@@ -44,7 +44,7 @@ class QueryRecyclerViewAdapter( MyPostDataList: ArrayList<Data>): RecyclerView.A
                 .into(holder.ProfilePic)
         }
 
-        val users = firebaseDatabase.getReference("Users")
+        val users = firebaseDatabase.getReference("USERS")
         val uid: String = myPostData.uid?.subSequence(0, 28).toString()
         users.child(uid).get().addOnSuccessListener {
             holder.ProfileName.text = it.getValue().toString()
